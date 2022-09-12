@@ -8,6 +8,8 @@
 /build
 Dockerfile
 .dockerignore
+/httpd
+./httpd.conf
 
 # testing
 /coverage

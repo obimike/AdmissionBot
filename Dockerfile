@@ -7,10 +7,15 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM nginx:alpine
+# FROM nginx:alpine
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/build /usr/share/nginx/html
+# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+# COPY --from=build /app/build /usr/share/nginx/html
+
+
+FROM httpd:alpine
+
+COPY --from=build /app/build /usr/local/apache2/htdocs/
 
 
 # FROM node:16.10-alpine

@@ -28,7 +28,7 @@ function Chat_window(props) {
     const options = {
       crossDomain: true,
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",
 
       headers: {
         Authorization:
