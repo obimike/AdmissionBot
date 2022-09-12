@@ -26,7 +26,10 @@ function Chat_window(props) {
 
   useEffect(() => {
     const options = {
+      crossDomain: true,
       method: "POST",
+      mode: "cors",
+
       headers: {
         Authorization:
           "Bearer fgTWhHSip1o.FBEQckO6aCRZFLfxEZiP4lZSs8Ui5y5BReOcTb6KnDE",
