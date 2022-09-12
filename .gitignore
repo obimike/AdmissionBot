@@ -6,7 +6,8 @@
 .pnp.js
 /nginx
 /build
-.Dockerfile
+Dockerfile
+.dockerignore
 
 # testing
 /coverage
