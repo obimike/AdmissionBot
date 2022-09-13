@@ -35,7 +35,7 @@ function Chat_window(props) {
   // }, []);
 
   useMemo(() => {
-    axios.get("http://localhost:444").then(function (response) {
+    axios.get("https://botapiv1.azurewebsites.net").then(function (response) {
       // handle success
       setgToken(response.data.token);
       console.log(response.data.token);
