@@ -1,5 +1,5 @@
 import { DirectLine } from "botframework-directlinejs";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import ReactWebChat from "botframework-webchat";
 import botImage from "../../assets/images/chatbot.png";
 import axios from "axios";
