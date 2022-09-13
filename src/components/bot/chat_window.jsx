@@ -1,13 +1,13 @@
 import { DirectLine } from "botframework-directlinejs";
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import ReactWebChat from "botframework-webchat";
 import botImage from "../../assets/images/chatbot.png";
+import axios from "axios";
 
 function Chat_window(props) {
-  const [gtoken, setgtoken] = useState("");
+  const [gToken, setgToken] = useState();
 
-  // Set the avatar options.
-  const sOptions = {
+  const sOption = {
     botAvatarImage: botImage,
     botAvatarInitials: "Leo",
     rootZIndex: 0,
@@ -16,7 +16,7 @@ function Chat_window(props) {
     bubbleFromUserTextColor: "#fff",
     bubbleBorderColor: "#00828b",
     bubbleBorderRadius: 24,
-    bubbleFromUserBorderColor: "#ce0058",
+    bubbleFromUserBorderColor: "#fff",
     bubbleFromUserBorderRadius: 24,
     suggestedActionBorderRadius: 24,
     suggestedActionLayout: "stacked",
@@ -24,34 +24,23 @@ function Chat_window(props) {
     backgroundColor: "#1C00ff00",
   };
 
-  useEffect(() => {
-    const options = {
-      crossDomain: true,
-      method: "POST",
-      mode: "no-cors",
+  // useEffect(() => {
+  //   return () => {
+  //     axios.get("http://localhost:444").then(function (response) {
+  //       // handle success
+  //       setgToken(response.data.token);
+  //       console.log(response.data.token);
+  //     });
+  //   };
+  // }, []);
 
-      headers: {
-        Authorization:
-          "Bearer fgTWhHSip1o.FBEQckO6aCRZFLfxEZiP4lZSs8Ui5y5BReOcTb6KnDE",
-      },
-    };
-
-    console.log("------78799999999999999999999---------");
-
-    return () => {
-      fetch(
-        "https://directline.botframework.com/v3/directline/tokens/generate",
-        options
-      )
-        .then((response) => response.json())
-        .then((response) => {
-          setgtoken(response.token);
-        })
-        .catch((err) => console.error(err));
-    };
+  useMemo(() => {
+    axios.get("http://localhost:444").then(function (response) {
+      // handle success
+      setgToken(response.data.token);
+      console.log(response.data.token);
+    });
   }, []);
-
-  // if (props.visible === false) return null;
 
   return (
     <>
@@ -70,10 +59,10 @@ function Chat_window(props) {
         }}
       >
         <ReactWebChat
-          styleOptions={sOptions}
+          styleOptions={sOption}
           directLine={
             new DirectLine({
-              token: gtoken,
+              token: gToken,
             })
           }
           userID={Math.random().toString(36).slice(2)}
