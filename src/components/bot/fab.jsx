@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { VscHubot, VscChromeClose } from "react-icons/vsc";
 
-function Fab(props) {
+import { useAuth } from "../../util/authProvider";
+
+function Fab() {
+  const { setvisible, visible } = useAuth();
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div style={props.style}>
+    <div style={{ position: "fixed", bottom: "24px", right: "24px" }}>
       <div
         className="transition-3 hey"
         style={{
@@ -16,14 +19,17 @@ function Fab(props) {
           opacity: hovered ? "1" : "0",
         }}
       >
-        Hey, It's Eddie!!!
+        Ask Eddie!
       </div>
 
       <button
         className="transition-3 fab"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onClick={() => props.onClick && props.onClick()}
+        onClick={() => {
+          console.count("onClick");
+          setvisible(!visible);
+        }}
         style={{
           boxShadow: "0px 0px 16px 6px rgba(0, 0, 0, 0.33)",
           backgroundRepeat: "no-repeat",
@@ -31,7 +37,7 @@ function Fab(props) {
           ...{ border: hovered ? "2px solid #00828b" : "4px solid #ce0058" },
         }}
       >
-        {!props.visible ? (
+        {!visible ? (
           <VscHubot className="icon" color="00828b" />
         ) : (
           <VscChromeClose className="icon" color="#ce0058" />

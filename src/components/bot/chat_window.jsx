@@ -1,15 +1,15 @@
-import { DirectLine } from "botframework-directlinejs";
-import React, { useMemo, useState } from "react";
 import ReactWebChat from "botframework-webchat";
-import botImage from "../../assets/images/chatbot.png";
-import axios from "axios";
+import React from "react";
+import Logo from "../../assets/images/logo.png";
+import { useAuth } from "../../util/authProvider";
+import { DirectLine } from "botframework-directlinejs";
 
-function Chat_window(props) {
-  const [gToken, setgToken] = useState();
+function Chat_window() {
+  const { gToken, visible } = useAuth();
 
   const sOption = {
-    botAvatarImage: botImage,
-    botAvatarInitials: "Leo",
+    botAvatarImage: Logo,
+    botAvatarInitials: "",
     rootZIndex: 0,
     bubbleBackground: "#e5e5ea",
     bubbleFromUserBackground: "#248bf5",
@@ -24,52 +24,64 @@ function Chat_window(props) {
     backgroundColor: "#1C00ff00",
   };
 
-  // useEffect(() => {
-  //   return () => {
-  //     axios.get("http://localhost:444").then(function (response) {
-  //       // handle success
-  //       setgToken(response.data.token);
-  //       console.log(response.data.token);
-  //     });
-  //   };
-  // }, []);
-
-  useMemo(() => {
-    axios.get("https://botapiv1.azurewebsites.net").then(function (response) {
-      // handle success
-      setgToken(response.data.token);
-      console.log(response.data.token);
-    });
-  }, []);
+  const directLine = new DirectLine({ token: gToken });
 
   return (
-    <>
+    <div
+      className="transition-5 chatbox"
+      style={{
+        backgroundColor: "#fff",
+        // Border
+        borderRadius: "12px",
+        border: "2px solid #00828b",
+        overflow: "hidden",
+        scrollBehavior: "smooth",
+        //shadow
+        boxShadow: "0px 0px 16px 6px rgba(0,0,0,0.33)",
+        display: "flex",
+        flexDirection: "column",
+        ...{ opacity: visible ? 1 : 0 },
+      }}
+    >
       <div
-        className="transition-5 chatbox"
         style={{
-          backgroundColor: "#fff",
-          // Border
-          borderRadius: "12px",
-          border: "2px solid #00828b",
-          overflow: "hidden",
-          scrollBehavior: "smooth",
-          //shadow
-          boxShadow: "0px 0px 16px 6px rgba(0,0,0,0.33)",
-          ...{ display: props.visible ? "flex" : "none" },
+          display: "flex",
+          flexDirection: "row",
+          height: 41,
+          width: "100%",
+          color: "white",
+          backgroundColor: "#00828b",
+          padding: 5,
+          fontWeight: "lighter",
+          alignItems: "center",
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            height: 8,
+            width: 8,
+            backgroundColor: "greenyellow",
+            borderRadius: "100%",
+            marginRight: 8,
+          }}
+        ></div>
+        Eddie, Admission Bot
+      </div>
+      <div
+        style={{
+          height: 489,
+        }}
+      >
+        {}
         <ReactWebChat
           styleOptions={sOption}
-          directLine={
-            new DirectLine({
-              token: gToken,
-            })
-          }
+          directLine={directLine}
           userID={Math.random().toString(36).slice(2)}
-          username="Leo"
+          username="Eddie"
         />
       </div>
-    </>
+    </div>
   );
 }
 
