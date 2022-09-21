@@ -12,7 +12,7 @@ export function UserProvider(props) {
   useEffect(() => {
     return () => {
       axios
-        .get("http://localhost:444")
+        .get("qnabotapi.azurewebsites.net/")
         .then(function (response) {
           // handle success
           setgToken(response.data.token);
